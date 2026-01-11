@@ -18,6 +18,9 @@ except Exception as e:
 with open('sample_patients.json', 'r') as f:
     sample_patients = json.load(f)
 
+# Get default patient (Healthy 30-year-old)
+default_case = sample_patients["Healthy 30-year-old"]
+
 def predict_diabetes(
     age, alcohol, physical_activity, diet_score, sleep_hours,
     screen_time, bmi, waist_hip_ratio, systolic_bp, diastolic_bp,
@@ -161,40 +164,40 @@ with gr.Blocks(title="Diabetes Prediction System", theme=gr.themes.Soft()) as de
             sample_dropdown = gr.Dropdown(
                 choices=list(sample_patients.keys()),
                 label="💡 Load Sample Patient",
-                value=list(sample_patients.keys())[0]
+                value="Healthy 30-year-old"
             )
 
             with gr.Tab("Demographics"):
-                age = gr.Slider(19, 89, value=50, step=1, label="Age")
-                gender = gr.Radio(["Female", "Male", "Other"], value="Female", label="Gender")
-                ethnicity = gr.Radio(["Asian", "Black", "Hispanic", "Other", "White"], value="White", label="Ethnicity")
-                education = gr.Radio(["No formal", "Highschool", "Undergraduate", "Postgraduate"], value="Highschool", label="Education Level")
-                income = gr.Radio(["Low", "Lower-Middle", "Middle", "Upper-Middle", "High"], value="Middle", label="Income Level")
-                employment = gr.Radio(["Employed", "Retired", "Student", "Unemployed"], value="Employed", label="Employment Status")
+                age = gr.Slider(19, 89, value=default_case["age"], step=1, label="Age")
+                gender = gr.Radio(["Female", "Male", "Other"], value=default_case["gender"], label="Gender")
+                ethnicity = gr.Radio(["Asian", "Black", "Hispanic", "Other", "White"], value=default_case["ethnicity"], label="Ethnicity")
+                education = gr.Radio(["No formal", "Highschool", "Undergraduate", "Postgraduate"], value=default_case["education"], label="Education Level")
+                income = gr.Radio(["Low", "Lower-Middle", "Middle", "Upper-Middle", "High"], value=default_case["income"], label="Income Level")
+                employment = gr.Radio(["Employed", "Retired", "Student", "Unemployed"], value=default_case["employment"], label="Employment Status")
 
             with gr.Tab("Lifestyle"):
-                alcohol = gr.Slider(1, 9, value=2, step=1, label="Alcohol Consumption (drinks/week)")
-                physical_activity = gr.Slider(1, 750, value=80, step=5, label="Physical Activity (minutes/week)")
-                diet_score = gr.Slider(0.1, 9.9, value=6.0, step=0.1, label="Diet Quality Score (0-10)")
-                sleep_hours = gr.Slider(3.1, 9.9, value=7.0, step=0.1, label="Sleep (hours/day)")
-                screen_time = gr.Slider(0.6, 16.5, value=6.0, step=0.1, label="Screen Time (hours/day)")
-                smoking = gr.Radio(["Never", "Former", "Current"], value="Never", label="Smoking Status")
+                alcohol = gr.Slider(1, 9, value=default_case["alcohol"], step=1, label="Alcohol Consumption (drinks/week)")
+                physical_activity = gr.Slider(1, 750, value=default_case["physical_activity"], step=5, label="Physical Activity (minutes/week)")
+                diet_score = gr.Slider(0.1, 9.9, value=default_case["diet_score"], step=0.1, label="Diet Quality Score (0-10)")
+                sleep_hours = gr.Slider(3.1, 9.9, value=default_case["sleep_hours"], step=0.1, label="Sleep (hours/day)")
+                screen_time = gr.Slider(0.6, 16.5, value=default_case["screen_time"], step=0.1, label="Screen Time (hours/day)")
+                smoking = gr.Radio(["Never", "Former", "Current"], value=default_case["smoking"], label="Smoking Status")
 
             with gr.Tab("Medical Measurements"):
-                bmi = gr.Slider(15.1, 38.4, value=25.9, step=0.1, label="BMI")
-                waist_hip_ratio = gr.Slider(0.68, 1.05, value=0.86, step=0.01, label="Waist-to-Hip Ratio")
-                systolic_bp = gr.Slider(91, 163, value=116, step=1, label="Systolic Blood Pressure")
-                diastolic_bp = gr.Slider(51, 104, value=75, step=1, label="Diastolic Blood Pressure")
-                heart_rate = gr.Slider(42, 101, value=70, step=1, label="Heart Rate (bpm)")
-                cholesterol_total = gr.Slider(117, 289, value=187, step=1, label="Total Cholesterol")
-                hdl = gr.Slider(21, 90, value=54, step=1, label="HDL Cholesterol (Good)")
-                ldl = gr.Slider(51, 205, value=103, step=1, label="LDL Cholesterol (Bad)")
-                triglycerides = gr.Slider(31, 290, value=123, step=1, label="Triglycerides")
+                bmi = gr.Slider(15.1, 38.4, value=default_case["bmi"], step=0.1, label="BMI")
+                waist_hip_ratio = gr.Slider(0.68, 1.05, value=default_case["waist_hip_ratio"], step=0.01, label="Waist-to-Hip Ratio")
+                systolic_bp = gr.Slider(91, 163, value=default_case["systolic_bp"], step=1, label="Systolic Blood Pressure")
+                diastolic_bp = gr.Slider(51, 104, value=default_case["diastolic_bp"], step=1, label="Diastolic Blood Pressure")
+                heart_rate = gr.Slider(42, 101, value=default_case["heart_rate"], step=1, label="Heart Rate (bpm)")
+                cholesterol_total = gr.Slider(117, 289, value=default_case["cholesterol_total"], step=1, label="Total Cholesterol")
+                hdl = gr.Slider(21, 90, value=default_case["hdl"], step=1, label="HDL Cholesterol (Good)")
+                ldl = gr.Slider(51, 205, value=default_case["ldl"], step=1, label="LDL Cholesterol (Bad)")
+                triglycerides = gr.Slider(31, 290, value=default_case["triglycerides"], step=1, label="Triglycerides")
 
             with gr.Tab("Medical History"):
-                family_history = gr.Checkbox(label="Family History of Diabetes", value=False)
-                hypertension = gr.Checkbox(label="Hypertension History", value=False)
-                cardiovascular = gr.Checkbox(label="Cardiovascular History", value=False)
+                family_history = gr.Checkbox(label="Family History of Diabetes", value=default_case["family_history"])
+                hypertension = gr.Checkbox(label="Hypertension History", value=default_case["hypertension"])
+                cardiovascular = gr.Checkbox(label="Cardiovascular History", value=default_case["cardiovascular"])
 
             predict_btn = gr.Button("🔬 Analyze Risk", variant="primary", size="lg")
 
